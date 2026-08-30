@@ -118,7 +118,7 @@ export const toolsData = [
   { id: "sifuyik", name: "Sifu Yik", desc: "Tutos IA courts et pratiques.", link: "#", category: "Formation", price: "Gratuit", featured: false, clicks: 0 },
   { id: "googleai", name: "Google AI Cert", desc: "Certification gratuite.", link: "https://cloud.google.com/ai", category: "Formation", price: "Gratuit", featured: false, clicks: 0 },
   { id: "openaiacademy", name: "OpenAI Academy", desc: "Cours officiels OpenAI.", link: "https://openai.com/academy", category: "Formation", price: "Gratuit", featured: false, clicks: 0 },
-  { id: "youtube", name: "YouTube Tuto", desc: "Apprentissage gratuit en vidéo.", link: "https://youtube.com", category: "Formation", price: "Gratuit", featured: false, clicks: 0 },
+  { id: "youtube-tuto", name: "YouTube Tuto", desc: "Apprentissage gratuit en vidéo.", link: "https://youtube.com", category: "Formation", price: "Gratuit", featured: false, clicks: 0 },
   { id: "freecodecamp", name: "freeCodeCamp", desc: "Cours dev & IA gratuits.", link: "https://freecodecamp.org", category: "Formation", price: "Gratuit", featured: false, clicks: 0 },
 
   // === TRAFIC ===
