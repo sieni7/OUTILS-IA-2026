@@ -1,15 +1,15 @@
 // scripts/inject-firebase-config.js
-// Génère js/firebase-config.js depuis les variables d'environnement.
+// Génère public/firebase-config.js depuis les variables d'environnement.
 // Usage : utilisé au build sur Netlify / Vercel pour injecter les clés SANS les versionner.
 // Règles :
-//  - Si VITE_FIREBASE_API_KEY est fournie (non vide, non "xxx") : régénère js/firebase-config.js.
+//  - Si VITE_FIREBASE_API_KEY est fournie (non vide, non "xxx") : régénère public/firebase-config.js.
 //  - Sinon : ne touche PAS au fichier local existant (vos clés locales restent intouchées).
 import { writeFileSync, existsSync, mkdirSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const target = resolve(__dirname, "../js/firebase-config.js");
+const target = resolve(__dirname, "../public/firebase-config.js");
 
 const key = process.env.VITE_FIREBASE_API_KEY;
 if (!key || key === "xxx" || key === "") {
@@ -32,11 +32,11 @@ const config = {
 
 mkdirSync(dirname(target), { recursive: true });
 const out =
-  "// js/firebase-config.js\n" +
+  "// public/firebase-config.js\n" +
   "// Généré automatiquement par scripts/inject-firebase-config.js — NE PAS COMMITER.\n" +
   "window.FIREBASE_CONFIG = " +
   JSON.stringify(config, null, 2) +
   ";\n";
 
 writeFileSync(target, out, "utf8");
-console.log("✅ inject-firebase-config : js/firebase-config.js généré depuis les variables d'environnement.");
+console.log("✅ inject-firebase-config : public/firebase-config.js généré depuis les variables d'environnement.");

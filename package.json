@@ -4,7 +4,7 @@
   "description": "Curation des meilleurs outils IA 2026 - Multi-hébergement",
   "type": "module",
   "scripts": {
-    "start": "npx serve .",
+    "start": "npx serve public",
     "build": "node scripts/inject-firebase-config.js",
     "deploy:netlify": "netlify deploy --prod",
     "deploy:vercel": "vercel --prod",

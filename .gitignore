@@ -2,7 +2,7 @@ node_modules/
 .env
 .env.local
 .env.*
-js/firebase-config.js
+public/firebase-config.js
 .DS_Store
 *.log
 dist/

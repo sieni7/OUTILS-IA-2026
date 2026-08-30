@@ -7,7 +7,7 @@ import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const target = resolve(__dirname, "../js/data.js");
+const target = resolve(__dirname, "../public/data.js");
 
 const src = readFileSync(target, "utf8");
 const lines = src.split("\n");

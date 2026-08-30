@@ -2,15 +2,22 @@
 Curated list of the best AI tools for 2026. Designed to be deployed on Netlify, Vercel, Firebase Hosting, and GitHub Pages.
 
 ## 📁 Structure
-- `index.html` : Page principale
-- `css/` : Styles personnalisés
-- `js/` : Données (data.js), logique (app.js), configuration Firebase (firebase-config.js)
+Tout le contenu statique est isolé dans `public/` : c'est **le seul dossier déployé** par
+Netlify, Vercel et Firebase Hosting (exclusion garantie par construction des fichiers sensibles
+comme `.env`, `*.md`, `firebase.json`, `package.json`). Les scripts de build restent à la racine
+hors du périmètre de déploiement.
+- `public/index.html` : Page principale
+- `public/style.css` : Styles personnalisés
+- `public/data.js` : Données des outils
+- `public/app.js` : Logique de l'application
+- `public/firebase-config.js` : Configuration Firebase (générée / non versionnée)
+- `public/_redirects`, `public/404.html` : Redirections SPA
 - `scripts/` : Scripts de build (injection des clés au déploiement)
-- Fichiers racine : `_redirects`, `vercel.json`, `firebase.json`, `404.html`
+- Fichiers racine : `vercel.json`, `firebase.json`, `.gitignore`, `package.json`
 
 ## 🔐 Gestion des clés Firebase (RÈGLE : jamais de clés sur GitHub)
-`js/firebase-config.js` est **ignoré par Git** (`.gitignore`) : vos clés restent locales.
-- **Local** : collez vos valeurs dans `js/firebase-config.js` directement.
+`public/firebase-config.js` est **ignoré par Git** (`.gitignore`) : vos clés restent locales.
+- **Local** : collez vos valeurs dans `public/firebase-config.js` directement.
 - **Netlify / Vercel** : définissez les variables d'environnement ci-dessous. La commande de
   build `npm run build` (script `scripts/inject-firebase-config.js`) génère alors le fichier
   au moment du déploiement.
@@ -31,37 +38,37 @@ VITE_FIREBASE_APP_ID=<votre_app_id>
 ```
 
 Localement, vous pouvez utiliser un fichier `.env.local` (ignoré par Git) pour les tests sans
-toucher `js/firebase-config.js`.
+toucher `public/firebase-config.js`.
 
 ## 🚀 Déploiement
 
 > ⚠️ **Important** : Netlify et Vercel déploient à partir du **dépôt Git** (pas de votre dossier local).
-> Un `js/firebase-config.js` non versionné sera donc **absent** de ces déploiements, sauf si vous
+> Un `public/firebase-config.js` non versionné sera donc **absent** de ces déploiements, sauf si vous
 > injectez les clés via variables d'environnement (voir ci-dessus) ou si vous versionnez le fichier.
 
 ### Netlify (recommandé)
 1. Importer le dépôt GitHub sur Netlify.
-2. Build command : `npm run build` — Publish directory : `/`.
+2. Build command : `npm run build` — Publish directory : `public/`.
 3. Ajouter les variables d'environnement Firebase (voir section 🔐).
-4. Le fichier `_redirects` (`/* /index.html 200`) gère le mode SPA.
+4. Le fichier `public/_redirects` (`/* /index.html 200`) gère le mode SPA.
 
 ### Vercel (recommandé)
 1. Importer le dépôt GitHub sur Vercel.
-2. Framework Preset : « Other » — Build command : `npm run build` — Output directory : `./` .
+2. Framework Preset : « Other » — Build command : `npm run build` — Output directory : `./public` .
 3. Ajouter les variables d'environnement Firebase (voir section 🔐).
 4. `vercel.json` (rewrites -> `/index.html`) gère le mode SPA.
 
 ### Firebase Hosting (optionnel)
 1. Avoir le CLI : `npm i -g firebase-tools`.
-2. `firebase deploy` — le CLI déploie depuis votre **dossier local** : `js/firebase-config.js`
-   (avec vos clés) est inclus si vous l'avez en local.
-3. Sur un clone Git frais, penser à recréer `js/firebase-config.js` (ou run `npm run build`
+2. `firebase deploy` — le CLI déploie **uniquement** le contenu de `public/` (configuré dans
+   `firebase.json`) : `public/firebase-config.js` (avec vos clés) est inclus si vous l'avez en local.
+3. Sur un clone Git frais, penser à recréer `public/firebase-config.js` (ou run `npm run build`
    avec les variables d'env définies).
 
 ### GitHub Pages
 <!-- TODO: statut GitHub Pages à confirmer (décision humaine étape 7-8) : activer ou retirer la section + 404.html -->
-1. Settings > Pages > Deploy from branch `main` (dossier racine `/`).
-2. Le fichier `404.html` redirige vers `/OUTILS-IA-2026/`.
+1. Settings > Pages > Deploy from branch `main` (dossier `/public`).
+2. Le fichier `public/404.html` redirige vers `/OUTILS-IA-2026/`.
    📝 **Si vous changez de sous-dossier ou passez sur un domaine personnel**,
    mettez à jour sa balise : `<meta http-equiv="refresh" content="0; url=<VOTRE-CHEMIN>/">`.
 3. Note : ce déploiement est basé sur Git → sans injection d'env, le site fonctionne
@@ -74,13 +81,13 @@ toucher `js/firebase-config.js`.
    problème était un cache ou un ancien déploiement.
 2. **Ouvrez la console (F12)** :
    - `Aucune config Firebase, fallback localStorage` → **comportement normal**, voir ci-dessous.
-   - Erreur réseau `404` sur `js/firebase-config.js` → normal aussi : ce fichier est absent du
+   - Erreur réseau `404` sur `public/firebase-config.js` → normal aussi : ce fichier est absent du
      dépôt Git (clés) ; le fallback localStorage prend le relais. Depuis G0, les ressources
      manquantes renvoient un vrai 404 (plus de masquage par le rewrite SPA).
    - Toute autre erreur JS → remontez-la avec le message exact.
 
 ### La persistance cloud (Firebase) ne fonctionne pas en production
-L'absence de `js/firebase-config.js` en production (fichier non versionné) déclenche le
+L'absence de `public/firebase-config.js` en production (fichier non versionné) déclenche le
 fallback **localStorage** : le site fonctionne normalement, mais les clics restent locaux au
 navigateur. Ce n'est **pas un bug**.
 Pour activer la persistance cloud sur Netlify / Vercel :
