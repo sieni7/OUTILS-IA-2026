@@ -87,7 +87,7 @@ function renderTools() {
   filtered.forEach(tool => {
     const clicks = tool.clicks || 0;
     const featuredBadge = tool.featured ? `<span class="badge bg-info text-dark text-uppercase me-1" style="font-size:0.65rem;">Top</span>` : '';
-    const priceClass = tool.price === 'Gratuit' ? 'success' : (tool.price === 'Frémium' ? 'warning' : 'danger');
+    const priceClass = tool.price === 'Gratuit' ? 'success' : (tool.price === 'Frémium' ? 'warning' : (tool.price === 'Économique' ? 'secondary' : 'danger'));
 
     html += `
       <div class="col">
