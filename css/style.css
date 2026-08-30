@@ -1,0 +1,69 @@
+/* css/style.css */
+body {
+  background-color: #0b0c10;
+  color: #c5c6c7;
+  font-family: 'Inter', sans-serif;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #00ffcc, #0077ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.fw-800 { font-weight: 800; }
+
+/* Cartes */
+.card-tool {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  transition: all 0.25s ease-in-out;
+  height: 100%;
+}
+.card-tool:hover {
+  transform: translateY(-5px);
+  border-color: #00ffcc;
+  box-shadow: 0 10px 20px rgba(0,255,204,0.12);
+}
+
+/* Badges prix */
+.badge-price {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Compteur clics */
+.click-counter {
+  font-family: 'Inter', monospace;
+  font-size: 0.85rem;
+  color: #00ffcc;
+  font-weight: 600;
+}
+
+/* Boutons filtre */
+.btn-filter {
+  border-radius: 20px;
+  color: #c5c6c7;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  padding: 0.4rem 1.2rem;
+  transition: all 0.2s;
+}
+.btn-filter:hover {
+  background: rgba(255,255,255,0.05);
+}
+.btn-filter.active {
+  background-color: #00ffcc;
+  color: #0b0c10;
+  border-color: #00ffcc;
+  font-weight: 600;
+}
+
+@media (max-width: 576px) {
+  .card-tool .btn-outline-light {
+    font-size: 0.8rem;
+  }
+}
