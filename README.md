@@ -11,11 +11,27 @@ Curated list of the best AI tools for 2026. Designed to be deployed on Netlify, 
 ## 🔐 Gestion des clés Firebase (RÈGLE : jamais de clés sur GitHub)
 `js/firebase-config.js` est **ignoré par Git** (`.gitignore`) : vos clés restent locales.
 - **Local** : collez vos valeurs dans `js/firebase-config.js` directement.
-- **Netlify / Vercel** : définissez `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`,
-  `VITE_FIREBASE_PROJECT_ID` (et éventuellement `..._STORAGE_BUCKET`, `..._MESSAGING_SENDER_ID`, `..._APP_ID`)
-  dans les variables d'environnement de la plateforme. La commande de build `npm run build`
-  (script `scripts/inject-firebase-config.js`) génère alors le fichier au moment du déploiement.
+- **Netlify / Vercel** : définissez les variables d'environnement ci-dessous. La commande de
+  build `npm run build` (script `scripts/inject-firebase-config.js`) génère alors le fichier
+  au moment du déploiement.
   ⚠️ Le script ne touche JAMAIS votre fichier local s'il n'y a pas de clé dans l'environnement.
+
+## 🔧 Configuration des variables d'environnement
+
+Variables requises par le build (`scripts/inject-firebase-config.js`), à définir dans les
+dashboards Netlify et Vercel (aucune valeur réelle ne doit jamais être versionnée) :
+
+```bash
+VITE_FIREBASE_API_KEY=<votre_clé>
+VITE_FIREBASE_AUTH_DOMAIN=<votre_projet>.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=<votre_projet>
+VITE_FIREBASE_STORAGE_BUCKET=<votre_projet>.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=<votre_sender_id>
+VITE_FIREBASE_APP_ID=<votre_app_id>
+```
+
+Localement, vous pouvez utiliser un fichier `.env.local` (ignoré par Git) pour les tests sans
+toucher `js/firebase-config.js`.
 
 ## 🚀 Déploiement
 
@@ -43,9 +59,37 @@ Curated list of the best AI tools for 2026. Designed to be deployed on Netlify, 
    avec les variables d'env définies).
 
 ### GitHub Pages
+<!-- TODO: statut GitHub Pages à confirmer (décision humaine étape 7-8) : activer ou retirer la section + 404.html -->
 1. Settings > Pages > Deploy from branch `main` (dossier racine `/`).
 2. Le fichier `404.html` redirige vers `/OUTILS-IA-2026/`.
    📝 **Si vous changez de sous-dossier ou passez sur un domaine personnel**,
    mettez à jour sa balise : `<meta http-equiv="refresh" content="0; url=<VOTRE-CHEMIN>/">`.
 3. Note : ce déploiement est basé sur Git → sans injection d'env, le site fonctionne
    en mode **localStorage** uniquement (pas de persistance cloud).
+
+## 🛠 Dépannage
+
+### « Chargement des outils... » reste affiché / catalogue vide
+1. **Videz le cache** (navigation privée / Ctrl+Shift+R). Si le site s'affiche après, le
+   problème était un cache ou un ancien déploiement.
+2. **Ouvrez la console (F12)** :
+   - `Aucune config Firebase, fallback localStorage` → **comportement normal**, voir ci-dessous.
+   - Erreur réseau `404` sur `js/firebase-config.js` → normal aussi : ce fichier est absent du
+     dépôt Git (clés) ; le fallback localStorage prend le relais. Depuis G0, les ressources
+     manquantes renvoient un vrai 404 (plus de masquage par le rewrite SPA).
+   - Toute autre erreur JS → remontez-la avec le message exact.
+
+### La persistance cloud (Firebase) ne fonctionne pas en production
+L'absence de `js/firebase-config.js` en production (fichier non versionné) déclenche le
+fallback **localStorage** : le site fonctionne normalement, mais les clics restent locaux au
+navigateur. Ce n'est **pas un bug**.
+Pour activer la persistance cloud sur Netlify / Vercel :
+1. Renseignez les 6 variables `VITE_FIREBASE_*` (section 🔧) dans les dashboards ;
+2. Relancez un déploiement (le build `npm run build` génère le fichier config) ;
+3. En navigation privée, vérifiez en console le message `🔥 Firebase connecté`.
+
+### Vérifier localement
+```bash
+npm start          # sert le site sur http://localhost:3000
+npm run build      # injecte les clés si VITE_FIREBASE_* présentes, sinon no-op
+```
