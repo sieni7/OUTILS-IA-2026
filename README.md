@@ -15,6 +15,22 @@ hors du périmètre de déploiement.
 - `scripts/` : Scripts de build (injection des clés au déploiement)
 - Fichiers racine : `vercel.json`, `firebase.json`, `.gitignore`, `package.json`
 
+## 🌐 Production
+
+Le site est déployé en parallèle sur 4 plateformes (même contenu, synchronisé à chaque push sur `main`) :
+
+| Plateforme | URL |
+| :--- | :--- |
+| Netlify | https://outils-ia-2026.netlify.app/ |
+| Vercel | https://outils-ia-2026.vercel.app/ |
+| Firebase Hosting | https://outils-ia-2026.web.app/ |
+| GitHub Pages | https://sieni7.github.io/OUTILS-IA-2026/ |
+
+**Fonctionnalités Sprint 6b vérifiées en production** : 96 cartes, badges Hot/New/Beta, carrousel héro,
+bascule thème clair/sombre, glassmorphisme navbar, footer pro, modale détaillée (année, éditeur, pays,
+description longue). Les routes sensibles (`.env`, `firebase.json`, `README.md`, `package.json`) sont
+masquées (rewrite SPA → `index.html`) ou renvoient 404 : **aucune fuite**.
+
 ## 🔐 Gestion des clés Firebase (RÈGLE : jamais de clés sur GitHub)
 `public/firebase-config.js` est **ignoré par Git** (`.gitignore`) : vos clés restent locales.
 - **Local** : collez vos valeurs dans `public/firebase-config.js` directement.
@@ -66,13 +82,16 @@ toucher `public/firebase-config.js`.
    avec les variables d'env définies).
 
 ### GitHub Pages
-<!-- TODO: statut GitHub Pages à confirmer (décision humaine étape 7-8) : activer ou retirer la section + 404.html -->
-1. Settings > Pages > Deploy from branch `main` (dossier `/public`).
-2. Le fichier `public/404.html` redirige vers `/OUTILS-IA-2026/`.
-   📝 **Si vous changez de sous-dossier ou passez sur un domaine personnel**,
-   mettez à jour sa balise : `<meta http-equiv="refresh" content="0; url=<VOTRE-CHEMIN>/">`.
-3. Note : ce déploiement est basé sur Git → sans injection d'env, le site fonctionne
-   en mode **localStorage** uniquement (pas de persistance cloud).
+Le déploiement utilise un **workflow GitHub Actions** (`.github/workflows/deploy-pages.yml`) qui publie le
+dossier `public/`. C'est la seule façon de servir `public/` : le déploiement « Deploy from branch » ne
+permet que `/` ou `/docs`. Le build type de Pages doit être réglé sur **GitHub Actions** (**Settings >
+Pages > Source : GitHub Actions**).
+1. Le workflow se déclenche automatiquement à chaque push sur `main` (ou via « Run workflow »).
+2. Il déploie `public/` (pas le `firebase-config.js`, non versionné) → le site fonctionne en mode
+   **localStorage** sur Pages (pas de persistance cloud).
+3. La page `404.html` (`public/404.html`) redirige vers `/OUTILS-IA-2026/`.
+   📝 **Si vous changez de sous-dossier ou passez sur un domaine personnel**, mettez à jour sa balise :
+   `<meta http-equiv="refresh" content="0; url=<VOTRE-CHEMIN>/">`.
 
 ## 🛠 Dépannage
 
