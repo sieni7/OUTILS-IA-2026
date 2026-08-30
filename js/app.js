@@ -5,6 +5,61 @@ import { toolsData } from './data.js';
 let currentFilter = 'all';
 let currentSearch = '';
 let allTools = [...toolsData];
+let db = null;
+let useFirebase = false;
+
+// --- Initialisation de Firebase (si config disponible) ---
+function initFirebase() {
+  if (typeof firebase !== 'undefined' && window.FIREBASE_CONFIG) {
+    try {
+      firebase.initializeApp(window.FIREBASE_CONFIG);
+      db = firebase.firestore();
+      useFirebase = true;
+      console.log('🔥 Firebase connecté');
+    } catch (e) {
+      console.warn('Firebase init échoué, fallback localStorage', e);
+      useFirebase = false;
+    }
+  } else {
+    console.warn('Aucune config Firebase, fallback localStorage');
+    useFirebase = false;
+  }
+}
+
+// --- Synchronisation des clics depuis Firebase ---
+async function syncClicksFromFirebase() {
+  if (!useFirebase || !db) return;
+
+  try {
+    const snapshot = await db.collection('tools').get();
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      if (data.clicks !== undefined) {
+        const tool = allTools.find(t => t.id === doc.id);
+        if (tool) {
+          tool.clicks = data.clicks;
+        }
+      }
+    });
+    // Mettre à jour localStorage pour cohérence
+    const stored = {};
+    allTools.forEach(t => { stored[t.id] = t.clicks; });
+    localStorage.setItem('tools_clicks', JSON.stringify(stored));
+    console.log('✅ Synchronisation Firebase réussie');
+  } catch (e) {
+    console.warn('Erreur de sync Firebase, utilisation localStorage', e);
+  }
+}
+
+// --- Fonction de mise à jour Firebase (appelée après chaque clic) ---
+async function updateFirebaseClicks(id, newClicks) {
+  if (!useFirebase || !db) return;
+  try {
+    await db.collection('tools').doc(id).set({ clicks: newClicks }, { merge: true });
+  } catch (e) {
+    console.warn('Firestore update error', e);
+  }
+}
 
 // --- Rendu des outils ---
 function renderTools() {
@@ -12,14 +67,12 @@ function renderTools() {
   const searchVal = document.getElementById('searchBar').value.toLowerCase().trim();
   const filterCat = currentFilter;
 
-  // Filtrer les données
   const filtered = allTools.filter(t => {
     const matchCat = filterCat === 'all' || t.category === filterCat;
     const matchSearch = t.name.toLowerCase().includes(searchVal) || t.desc.toLowerCase().includes(searchVal);
     return matchCat && matchSearch;
   });
 
-  // Si aucun résultat
   if (filtered.length === 0) {
     grid.innerHTML = `
       <div class="col-12 text-center text-muted py-5">
@@ -30,13 +83,10 @@ function renderTools() {
     return;
   }
 
-  // Génération des cartes
   let html = '';
   filtered.forEach(tool => {
     const clicks = tool.clicks || 0;
-    const featuredBadge = tool.featured
-      ? `<span class="badge bg-info text-dark text-uppercase me-1" style="font-size:0.65rem;">Top</span>`
-      : '';
+    const featuredBadge = tool.featured ? `<span class="badge bg-info text-dark text-uppercase me-1" style="font-size:0.65rem;">Top</span>` : '';
     const priceClass = tool.price === 'Gratuit' ? 'success' : (tool.price === 'Frémium' ? 'warning' : 'danger');
 
     html += `
@@ -68,22 +118,22 @@ function renderTools() {
   updateTotalClicks();
 }
 
-// --- Gestion du clic sur un outil (exposée globalement) ---
+// --- Gestion du clic ---
 window.handleClick = function(id) {
   const tool = allTools.find(t => t.id === id);
   if (!tool) return;
 
-  // Incrémenter localement
   tool.clicks = (tool.clicks || 0) + 1;
 
-  // Sauvegarder dans localStorage (fallback avant Firebase)
+  // Mettre à jour localStorage
   try {
     const stored = JSON.parse(localStorage.getItem('tools_clicks')) || {};
     stored[id] = tool.clicks;
     localStorage.setItem('tools_clicks', JSON.stringify(stored));
-  } catch (e) {
-    console.warn('Erreur de sauvegarde localStorage', e);
-  }
+  } catch (e) {}
+
+  // Mettre à jour Firebase (asynchrone, non bloquante)
+  updateFirebaseClicks(id, tool.clicks);
 
   // Ouvrir le lien
   if (tool.link && tool.link !== '#') {
@@ -92,7 +142,6 @@ window.handleClick = function(id) {
     alert('Lien non disponible pour cet outil.');
   }
 
-  // Re-rendre pour mettre à jour l'affichage
   renderTools();
 };
 
@@ -103,7 +152,7 @@ function updateTotalClicks() {
   if (el) el.textContent = total;
 }
 
-// --- Chargement des clics depuis localStorage ---
+// --- Chargement des clics depuis localStorage (fallback) ---
 function loadClicksFromLocalStorage() {
   try {
     const stored = JSON.parse(localStorage.getItem('tools_clicks')) || {};
@@ -112,19 +161,14 @@ function loadClicksFromLocalStorage() {
         t.clicks = stored[t.id];
       }
     });
-  } catch (e) {
-    console.warn('Erreur de lecture localStorage', e);
-  }
+  } catch (e) {}
 }
 
-// --- Génération des boutons de filtre dynamiquement ---
+// --- Génération des filtres ---
 function generateFilters() {
   const container = document.getElementById('filterContainer');
   if (!container) return;
-
-  // Récupérer les catégories uniques (triées)
   const categories = ['all', ...new Set(allTools.map(t => t.category))];
-
   container.innerHTML = '';
   categories.forEach(cat => {
     const btn = document.createElement('button');
@@ -141,27 +185,33 @@ function generateFilters() {
   });
 }
 
-// --- Initialisation ---
-function init() {
-  // Charger les clics depuis localStorage
+// --- Initialisation asynchrone ---
+async function init() {
+  // 1. Charger les clics depuis localStorage (fallback immédiat)
   loadClicksFromLocalStorage();
 
-  // Générer les filtres
-  generateFilters();
+  // 2. Initialiser Firebase (si config disponible)
+  initFirebase();
 
-  // Écouter la recherche
-  const searchBar = document.getElementById('searchBar');
-  if (searchBar) {
-    searchBar.addEventListener('input', (e) => {
-      renderTools();
-    });
+  // 3. Si Firebase est actif, tenter une sync (écrase localStorage)
+  if (useFirebase) {
+    await syncClicksFromFirebase();
   }
 
-  // Premier rendu
+  // 4. Générer les filtres
+  generateFilters();
+
+  // 5. Écouter la recherche
+  const searchBar = document.getElementById('searchBar');
+  if (searchBar) {
+    searchBar.addEventListener('input', () => renderTools());
+  }
+
+  // 6. Premier rendu
   renderTools();
 
-  console.log(`✅ Sprint 2 - ${allTools.length} outils chargés, mode localStorage actif`);
+  console.log(`✅ Sprint 3 - ${allTools.length} outils, mode ${useFirebase ? 'Firebase' : 'localStorage'}`);
 }
 
-// Lancer l'application au chargement du DOM
+// Lancer au chargement
 document.addEventListener('DOMContentLoaded', init);
