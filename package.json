@@ -1,0 +1,13 @@
+{
+  "name": "outils-ia-2026",
+  "version": "1.0.0",
+  "description": "Curation des meilleurs outils IA 2026 - Multi-hébergement",
+  "scripts": {
+    "start": "npx serve .",
+    "deploy:netlify": "netlify deploy --prod",
+    "deploy:vercel": "vercel --prod",
+    "deploy:firebase": "firebase deploy"
+  },
+  "author": "sieni7",
+  "license": "MIT"
+}
