@@ -19,7 +19,12 @@
 
 <div class="container py-4 py-md-5">
   <!-- HEADER -->
-  <header class="text-center mb-5">
+  <header class="text-center mb-5 navbar-glass py-3">
+    <div class="d-flex justify-content-end mb-2">
+      <button id="themeToggle" class="btn btn-outline-light btn-sm" style="border-radius: 20px;" aria-label="Basculer le thème">
+        🌙
+      </button>
+    </div>
     <span class="badge bg-secondary mb-2">Curated Stack 2026</span>
     <h1 class="display-4 fw-800 text-white">L'Arsenal <span class="text-gradient">IA Absolu</span></h1>
     <p class="lead text-muted mx-auto" style="max-width: 650px;">
@@ -31,6 +36,38 @@
       </span>
     </div>
   </header>
+
+  <!-- CARROUSEL HÉRO -->
+  <div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="hero-slide">
+          <h2>🚀 Découvrez les outils IA les plus populaires</h2>
+          <p>Une curation des meilleures IA pour booster votre productivité.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="hero-slide">
+          <h2>⚡ Automatisez vos workflows</h2>
+          <p>Des agents IA, des automatisations et des outils de développement.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="hero-slide">
+          <h2>🌍 Rejoignez la communauté</h2>
+          <p>Partagez, proposez des outils et contribuez au catalogue.</p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Précédent</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Suivant</span>
+    </button>
+  </div>
 
   <!-- RECHERCHE -->
   <div class="row g-3 mb-4 justify-content-center">
@@ -53,18 +90,72 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="text-center text-muted small mt-5 pt-4 border-top border-secondary">
-    <p>© 2026 — OUTILS IA 2026 · Curation par <a href="https://github.com/sieni7" target="_blank" class="text-light text-decoration-none">sieni7</a></p>
+  <!-- FOOTER PRO -->
+  <footer class="footer-pro">
+    <div class="footer-submit mb-4 text-center">
+      <p class="mb-3">💡 Vous souhaitez soumettre un outil non référencé ?</p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a href="mailto:sieni7@gmail.com?subject=Soumission%20outil%20IA%202026&body=Nom%20:%0ADescription%20:%0ALien%20:%0ACat%C3%A9gorie%20:%0APrix%20:%0AStatut%20:%0A" class="btn btn-outline-light btn-sm">
+          📧 Envoyer par email
+        </a>
+        <a href="https://wa.me/2250574971022?text=Bonjour%2C%20je%20souhaite%20soumettre%20un%20outil%20IA%20pour%20le%20catalogue%20OUTILS-IA-2026.%0ANom%20:%0ADescription%20:%0ALien%20:%0ACat%C3%A9gorie%20:%0APrix%20:%0A" target="_blank" class="btn btn-outline-success btn-sm">
+          💬 Envoyer via WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h5>🔗 Hébergement</h5>
+        <ul>
+          <li><a href="https://outils-ia-2026.netlify.app/" target="_blank">Netlify</a></li>
+          <li><a href="https://outils-ia-2026.vercel.app/" target="_blank">Vercel</a></li>
+          <li><a href="https://outils-ia-2026.web.app/" target="_blank">Firebase Hosting</a></li>
+          <li><a href="https://sieni7.github.io/OUTILS-IA-2026/" target="_blank">GitHub Pages</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>📞 Contacts</h5>
+        <ul>
+          <li>Tél : +225 07 16 53 55 80</li>
+          <li>WhatsApp : <a href="https://wa.me/2250574971022" target="_blank">+225 05 74 97 10 22</a></li>
+          <li>WhatsApp Business : <a href="https://wa.me/2250104462512" target="_blank">+225 01 04 46 25 12</a></li>
+          <li>Facebook : <a href="https://facebook.com/oulai.sieni" target="_blank">Oulai Siéni</a></li>
+          <li>Gmail : <a href="mailto:sieni7@gmail.com">sieni7@gmail.com</a></li>
+          <li>GitHub : <a href="https://github.com/sieni7" target="_blank">sieni7</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>❤️ À propos</h5>
+        <p>Développé avec amour en Côte d'Ivoire par Oulai Siéni - validateur des Human Decision Gates, DeepSeek - orchestrateur, Opencode - Builder</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 — OUTILS IA 2026 · Tous droits réservés</p>
+    </div>
   </footer>
+</div>
 </div>
 
 <!-- Configuration Firebase (clés, ignoré par Git) -->
   <script src="firebase-config.js"></script>
 
+<!-- Bootstrap Bundle (carrousel, etc.) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Nos scripts (modules) -->
   <script type="module" src="data.js"></script>
   <script type="module" src="app.js"></script>
+
+<!-- MODALE PLEIN ÉCRAN -->
+<div id="toolModal" class="modal-overlay" style="display:none;">
+  <div class="modal-backdrop" onclick="closeModal()"></div>
+  <div class="modal-container">
+    <button class="modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+    <div class="modal-content" id="modalContent">
+      <!-- Rempli dynamiquement par JavaScript -->
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

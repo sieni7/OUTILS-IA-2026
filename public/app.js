@@ -8,6 +8,26 @@ let allTools = [...toolsData];
 let db = null;
 let useFirebase = false;
 
+// --- Bascule thème sombre/clair ---
+function applyTheme() {
+  const darkMode = localStorage.getItem('theme') !== 'light';
+  document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+  const toggle = document.getElementById('themeToggle');
+  if (toggle) toggle.textContent = darkMode ? '🌙' : '☀️';
+}
+applyTheme();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('themeToggle');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const darkMode = localStorage.getItem('theme') !== 'light';
+      localStorage.setItem('theme', darkMode ? 'light' : 'dark');
+      applyTheme();
+    });
+  }
+});
+
 // --- Initialisation de Firebase (si config disponible) ---
 function initFirebase() {
   if (typeof firebase !== 'undefined' && window.FIREBASE_CONFIG) {
@@ -87,16 +107,21 @@ function renderTools() {
   filtered.forEach(tool => {
     const clicks = tool.clicks || 0;
     const featuredBadge = tool.featured ? `<span class="badge bg-info text-dark text-uppercase me-1" style="font-size:0.65rem;">Top</span>` : '';
+    const badgeMap = { hot: ['danger', 'Hot'], new: ['success', 'New'], beta: ['warning', 'Beta'] };
+    const promoBadge = tool.badge && badgeMap[tool.badge]
+      ? `<span class="badge bg-${badgeMap[tool.badge][0]} text-white text-uppercase me-1" style="font-size:0.65rem;">${badgeMap[tool.badge][1]}</span>`
+      : '';
     const priceClass = tool.price === 'Gratuit' ? 'success' : (tool.price === 'Frémium' ? 'warning' : (tool.price === 'Économique' ? 'secondary' : 'danger'));
 
     html += `
       <div class="col">
-        <div class="card card-tool h-100 p-4 d-flex flex-column justify-content-between">
+        <div class="card card-tool h-100 p-4 d-flex flex-column justify-content-between" onclick="openModal('${tool.id}')" style="cursor:pointer;">
           <div>
             <div class="d-flex justify-content-between align-items-start mb-3">
               <span class="badge bg-dark border border-secondary text-light">${tool.category}</span>
               <div>
                 ${featuredBadge}
+                ${promoBadge}
                 <span class="badge badge-price bg-${priceClass} bg-opacity-10 text-${priceClass} border border-${priceClass}">${tool.price}</span>
               </div>
             </div>
@@ -144,6 +169,53 @@ window.handleClick = function(id) {
 
   renderTools();
 };
+
+// --- MODALE DÉTAILLÉE ---
+function openModal(id) {
+  const tool = allTools.find(t => t.id === id);
+  if (!tool) return;
+
+  const modal = document.getElementById('toolModal');
+  const content = document.getElementById('modalContent');
+  if (!modal || !content) return;
+
+  const clicks = tool.clicks || 0;
+  const statusBadge = tool.status === 'verified'
+    ? '<span class="badge bg-success text-light">✅ Vérifié</span>'
+    : '<span class="badge bg-secondary text-light">⏳ En attente</span>';
+  const linkBtn = (tool.link && tool.link !== '#')
+    ? `<a href="${tool.link}" target="_blank" class="btn btn-primary mt-3">🌐 Visiter le site</a>`
+    : '<span class="badge bg-warning text-dark mt-3">Lien non disponible</span>';
+
+  content.innerHTML = `
+    <div class="modal-header">
+      <h2>${tool.name}</h2>
+      <span class="badge bg-secondary text-light">${tool.category}</span>
+    </div>
+    <div class="modal-body">
+      <p><strong>Année :</strong> ${tool.year || 'Inconnue'}</p>
+      <p><strong>Éditeur :</strong> ${tool.publisher || 'Inconnu'}</p>
+      <p><strong>Pays :</strong> ${tool.country || 'Inconnu'}</p>
+      <p><strong>Description :</strong> ${tool.descriptionFull || tool.desc}</p>
+      <p><strong>Prix :</strong> ${tool.price}</p>
+      <p><strong>Statut :</strong> ${statusBadge}</p>
+      <p><strong>Total clics :</strong> ${clicks}</p>
+      ${linkBtn}
+    </div>
+  `;
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const modal = document.getElementById('toolModal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+window.openModal = openModal;
+window.closeModal = closeModal;
 
 // --- Mise à jour du compteur total ---
 function updateTotalClicks() {
@@ -206,6 +278,11 @@ async function init() {
   if (searchBar) {
     searchBar.addEventListener('input', () => renderTools());
   }
+
+  // 5b. Fermer la modale avec la touche Échap
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
 
   // 6. Premier rendu
   renderTools();
