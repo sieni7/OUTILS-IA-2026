@@ -105,9 +105,9 @@ function renderTools() {
           </div>
           <div class="d-flex justify-content-between align-items-center mt-4">
             <span class="click-counter"><i class="bi bi-mouse me-1"></i> ${clicks} clics</span>
-            <button onclick="window.handleClick('${tool.id}')" class="btn btn-sm btn-outline-light px-3" style="border-radius:8px;">
-              Ouvrir <i class="bi bi-box-arrow-up-right ms-1"></i>
-            </button>
+            ${tool.status === 'verified'
+              ? `<button onclick="window.handleClick('${tool.id}')" class="btn btn-sm btn-outline-light px-3" style="border-radius:8px;">Ouvrir <i class="bi bi-box-arrow-up-right ms-1"></i></button>`
+              : `<span class="badge bg-secondary text-light px-3 py-2" style="border-radius:8px;">⏳ À vérifier</span>`}
           </div>
         </div>
       </div>
