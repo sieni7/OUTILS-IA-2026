@@ -603,3 +603,177 @@ body {
 
 .card-tool h4 { color: var(--text-strong); }
 .card-tool p { color: var(--text); }
+
+/* ============================================
+   MODALE OUTIL PREMIUM — animations, glassmorphisme, grille, icônes
+   ============================================ */
+.modal-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-overlay.open .modal-container {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+.modal-container {
+  transform: translateY(24px) scale(0.96);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  background: linear-gradient(145deg, rgba(26, 26, 46, 0.92), rgba(11, 12, 16, 0.96));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 204, 0.08),
+    0 30px 70px rgba(0, 0, 0, 0.85);
+}
+[data-theme="light"] .modal-container {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(240, 242, 247, 0.98));
+  border-color: rgba(0, 0, 0, 0.10);
+  box-shadow:
+    0 0 0 1px rgba(0, 119, 255, 0.10),
+    0 30px 70px rgba(0, 0, 0, 0.30);
+}
+
+.modal-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.18), rgba(0, 119, 255, 0.18));
+  border: 1px solid rgba(0, 255, 204, 0.30);
+  font-size: 1.6rem;
+  margin-right: 1rem;
+}
+[data-theme="light"] .modal-icon {
+  background: linear-gradient(135deg, rgba(0, 255, 204, 0.25), rgba(0, 119, 255, 0.25));
+  border-color: rgba(0, 119, 255, 0.35);
+}
+.modal-header {
+  gap: 1rem;
+}
+.badge-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, #00ffcc, #0077ff);
+  color: #0b0c10;
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+.modal-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+}
+.modal-info-item i {
+  color: var(--accent);
+  font-size: 1.1rem;
+  margin-top: 0.1rem;
+}
+.modal-info-item .lbl {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  opacity: 0.7;
+  margin-bottom: 0.1rem;
+}
+.modal-info-item .val {
+  font-weight: 600;
+  color: var(--text-strong);
+  font-size: 0.95rem;
+}
+[data-theme="light"] .modal-info-item {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+.modal-desc {
+  margin-top: 1rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+.modal-desc strong {
+  color: var(--text-strong);
+}
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.4rem;
+  flex-wrap: wrap;
+}
+.modal-footer {
+  border-top: 1px solid var(--card-border);
+  padding-top: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+/* ============================================
+   MODALE CAS D'USAGE
+   ============================================ */
+.use-case {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1rem;
+  transition: background 0.2s, transform 0.2s;
+}
+.use-case:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
+}
+.use-case h4 {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.use-case p {
+  color: #c5c6c7;
+  line-height: 1.6;
+  margin-bottom: 0.3rem;
+}
+.use-case p strong {
+  color: #fff;
+}
+
+[data-theme="light"] .use-case {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+[data-theme="light"] .use-case h4 {
+  color: #0b0c10;
+}
+[data-theme="light"] .use-case p {
+  color: #2d2d44;
+}
+[data-theme="light"] .use-case p strong {
+  color: #0b0c10;
+}

@@ -43,6 +43,15 @@ Les routes sensibles (`.env`, `firebase.json`, `README.md`, `package.json`) sont
 - **Formulaire de soumission** d'outil (email + WhatsApp)
 - **Déployé sur 4 plateformes** (Netlify, Vercel, Firebase, GitHub Pages)
 
+## 🎯 4 cas d'usage
+
+| # | Cas d'usage | Public cible |
+| :--- | :--- | :--- |
+| 1 | **Veille technologique** | Chefs de projet IA, CTO, consultants |
+| 2 | **Sélection d'outils pour créateurs** | YouTubers, community managers, rédacteurs |
+| 3 | **Formation et apprentissage** | Étudiants, développeurs juniors |
+| 4 | **Veille concurrentielle** | Directions innovation, startups |
+
 ## 🔐 Gestion des clés Firebase (RÈGLE : jamais de clés sur GitHub)
 `public/firebase-config.js` est **ignoré par Git** (`.gitignore`) : vos clés restent locales.
 - **Local** : collez vos valeurs dans `public/firebase-config.js` directement.

@@ -217,6 +217,11 @@
             <span class="badge bg-dark text-light me-1">🤖 DeepSeek</span> Orchestrateur<br>
             <span class="badge bg-dark text-light me-1">⚙️ Opencode</span> Builder
           </p>
+          <p class="mt-2 mb-0">
+            <a href="#" onclick="event.preventDefault(); openUseCasesModal();" class="text-cyan text-decoration-none">
+              <i class="bi bi-book me-1"></i> Voir les 4 cas d'usage
+            </a>
+          </p>
         </div>
       </div>
 
@@ -272,6 +277,46 @@
     <button class="modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
     <div class="modal-content" id="modalContent">
       <!-- Rempli dynamiquement par JavaScript -->
+    </div>
+  </div>
+</div>
+
+<!-- MODALE CAS D'USAGE -->
+<div id="useCasesModal" class="modal-overlay" style="display:none;">
+  <div class="modal-backdrop" onclick="closeUseCasesModal()"></div>
+  <div class="modal-container" style="max-width: 800px;">
+    <button class="modal-close" onclick="closeUseCasesModal()">✕</button>
+    <div class="modal-header">
+      <div class="d-flex align-items-center">
+        <span class="modal-icon"><i class="bi bi-target"></i></span>
+        <h2>4 cas d'usage</h2>
+      </div>
+      <span class="badge-cat">OUTILS IA 2026</span>
+    </div>
+    <div class="modal-body" style="grid-template-columns: 1fr;">
+      <div class="use-case">
+        <h4><span class="badge bg-primary me-2">1</span> Veille technologique</h4>
+        <p><strong>Public :</strong> Chefs de projet IA, CTO, consultants.</p>
+        <p>Accédez en un coup d'œil aux 96 outils IA les plus pertinents, classés par catégorie, avec fiches détaillées (éditeur, année, pays, prix). Gain de temps pour les études de marché et comparatifs.</p>
+      </div>
+      <div class="use-case">
+        <h4><span class="badge bg-success me-2">2</span> Sélection d'outils pour créateurs</h4>
+        <p><strong>Public :</strong> YouTubers, community managers, rédacteurs.</p>
+        <p>Trouvez rapidement les outils adaptés à chaque étape : recherche (Perplexity), écriture (Claude), image (Midjourney), vidéo (CapCut), voix (ElevenLabs), musique (Suno). Filtrage par usage et prix.</p>
+      </div>
+      <div class="use-case">
+        <h4><span class="badge bg-warning text-dark me-2">3</span> Formation et apprentissage</h4>
+        <p><strong>Public :</strong> Étudiants en IA, développeurs juniors.</p>
+        <p>Découvrez l'écosystème IA de manière structurée avec des outils gratuits ou freemium (DeepSeek V3.2, Qwen, Stable Diffusion, NotebookLM). Les fiches détaillées donnent le contexte (éditeur, pays, année).</p>
+      </div>
+      <div class="use-case">
+        <h4><span class="badge bg-danger me-2">4</span> Veille concurrentielle</h4>
+        <p><strong>Public :</strong> Directions innovation, startups.</p>
+        <p>Suivez l'évolution du marché via les badges « New » et « Hot ». Le compteur de clics (Firebase) identifie les outils les plus consultés par la communauté.</p>
+      </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-center mt-3">
+      <button onclick="closeUseCasesModal()" class="btn btn-outline-light rounded-pill">Fermer</button>
     </div>
   </div>
 </div>
