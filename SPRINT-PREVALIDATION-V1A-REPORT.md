@@ -45,7 +45,7 @@
 | Suppression des anciens outils sociaux (YouTube, etc.) | ✅ |
 | Total outils = 96 (vérifié) | ✅ |
 | Commit + push effectués | ✅ (`a213066`) |
-| 4 plateformes synchronisées | ⚠️ 3/4 (Firebase en attente) |
+| 4 plateformes synchronisées | ✅ 4/4 |
 
 ---
 
@@ -55,11 +55,11 @@
 | :--- | :---: | :---: | :---: | :---: |
 | **Netlify** | ✅ | ✅ | ✅ | 0 |
 | **Vercel** | ✅ | ✅ | ✅ | 0 |
-| **Firebase Hosting** | ⬜ (ancienne v) | ⬜ (anciens sociaux) | ⬜ | — |
+| **Firebase Hosting** | ✅ | ✅ | ✅ | 0 |
 | **GitHub Pages** | ✅ | ✅ | ✅ | 0 |
 
-**Note Firebase Hosting** : conforme à la décision validateur *« Ignorer Firebase pour cette passe »* — nécessite `firebase login` + `firebase deploy --only hosting` pour compléter 4/4 (le site y sert encore l'ancienne version avec les 5 réseaux sociaux dans Trafic).
+**Mise à jour Firebase Hosting (31/08/2026)** : déployé via `firebase deploy --only hosting` (session `sieni7@gmail.com`, projet `outils-ia-2026`) — `Deploy complete!`. Validé en production : 96 cartes, title "L'Arsenal IA Absolu", meta/preconnect, anti-double-clic, Trafic = `[Jasper, Frase, Canva AI, Lately, Brand24]`, 0 erreur console. **Synchronisation 4/4 complétée.**
 
 ## Verdict
 
-**Prévalidation v1 (Option A) déployée et validée sur les 3 plateformes auto-synchronisées (Netlify, Vercel, GitHub Pages). Total = 96 outils. Firebase Hosting reste en attente de déploiement manuel pour compléter la synchronisation.**
+**Prévalidation v1 (Option A) déployée et validée sur les 4 plateformes (Netlify, Vercel, Firebase Hosting, GitHub Pages). Total = 96 outils. Synchronisation 4/4 — COMPLÈTE.**
