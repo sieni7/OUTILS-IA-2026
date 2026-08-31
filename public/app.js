@@ -7,6 +7,7 @@ let currentSearch = '';
 let allTools = [...toolsData];
 let db = null;
 let useFirebase = false;
+let useCasesModalOpen = false;
 
 // --- Bascule thème sombre/clair ---
 function applyTheme() {
@@ -275,14 +276,31 @@ function openModal(id) {
   modal.style.display = 'flex';
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Focus clavier sur le bouton de fermeture
+  const closeBtn = modal.querySelector('.modal-close');
+  if (closeBtn) {
+    setTimeout(() => closeBtn.focus(), 100);
+  }
 }
 
 function closeModal() {
   const modal = document.getElementById('toolModal');
   if (!modal) return;
+  const container = modal.querySelector('.modal-container');
   modal.classList.remove('open');
-  modal.style.display = 'none';
-  document.body.style.overflow = 'auto';
+  modal.classList.add('closing');
+  if (container) container.classList.add('closing');
+  const wasFocused = document.activeElement;
+  setTimeout(() => {
+    modal.style.display = 'none';
+    modal.classList.remove('closing');
+    if (container) container.classList.remove('closing');
+    document.body.style.overflow = 'auto';
+    if (wasFocused && wasFocused.closest && wasFocused.closest('body')) {
+      wasFocused.focus();
+    }
+  }, 250);
 }
 
 window.openModal = openModal;
@@ -290,14 +308,22 @@ window.closeModal = closeModal;
 
 // --- MODALE CAS D'USAGE ---
 function openUseCasesModal() {
+  if (useCasesModalOpen) return;
+  useCasesModalOpen = true;
   const modal = document.getElementById('useCasesModal');
-  if (!modal) return;
+  if (!modal) { useCasesModalOpen = false; return; }
   modal.style.display = 'flex';
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  const closeBtn = modal.querySelector('.modal-close');
+  if (closeBtn) {
+    setTimeout(() => closeBtn.focus(), 100);
+  }
 }
 
 function closeUseCasesModal() {
+  if (!useCasesModalOpen) return;
+  useCasesModalOpen = false;
   const modal = document.getElementById('useCasesModal');
   if (!modal) return;
   modal.classList.remove('open');

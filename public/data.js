@@ -613,35 +613,10 @@ export const toolsData = [
   },
 
   // === TRAFIC ===
-  { id: "youtube", name: "YouTube", desc: "Long terme, SEO vidéo.", link: "https://youtube.com", category: "Trafic", price: "Gratuit", featured: false, clicks: 0, status: "verified" ,
-    year: "2005",
-    publisher: "Google (YouTube)",
-    country: "USA",
-    descriptionFull: "Plateforme vidéo à fort potentiel SEO à long terme. Points forts : gratuit et référencement durable. Points faibles : concurrence forte et temps nécessaire."
-  },
-  { id: "facebook", name: "Facebook", desc: "Communauté et groupes.", link: "https://facebook.com", category: "Trafic", price: "Gratuit", featured: false, clicks: 0, status: "verified" ,
-    year: "2004",
-    publisher: "Meta",
-    country: "USA",
-    descriptionFull: "Réseau social utile pour bâtir une communauté et des groupes. Points forts : portée et groupes. Points faibles : portée organique en baisse."
-  },
-  { id: "tiktok", name: "TikTok", desc: "Viralité rapide.", link: "https://tiktok.com", category: "Trafic", price: "Gratuit", featured: false, clicks: 0, status: "verified" ,
-    year: "2016",
-    publisher: "ByteDance",
-    country: "Chine",
-    descriptionFull: "Réseau social vidéo court à fort potentiel de viralité rapide. Points forts : viralité et audience jeune. Points faibles : algorithme imprévisible."
-  },
-  { id: "instagram", name: "Instagram", desc: "Image de marque.", link: "https://instagram.com", category: "Trafic", price: "Gratuit", featured: false, clicks: 0, status: "verified" ,
-    year: "2010",
-    publisher: "Meta",
-    country: "USA",
-    descriptionFull: "Réseau social visuel orienté image de marque et esthétique. Points forts : engagement visuel fort. Points faibles : nécessité de production de contenu visuel."
-  },
-  { id: "discord", name: "Discord", desc: "Fédérer une audience.", link: "https://discord.com", category: "Trafic", price: "Gratuit", featured: false, clicks: 0, status: "verified" ,
-    year: "2015",
-    publisher: "Discord",
-    country: "USA",
-    descriptionFull: "Plateforme communautaire pour fédérer et engager une audience. Points forts : communauté et interaction. Points faibles : gestion et animation nécessaires."
-  }
+  { id: "jasper", name: "Jasper", desc: "Génération de contenu SEO optimisé pour le trafic organique.", link: "https://jasper.ai", category: "Trafic", price: "Payant", featured: false, clicks: 0, status: "verified", year: "2021", publisher: "Jasper AI", country: "USA", descriptionFull: "Jasper est un assistant d'écriture IA spécialisé dans le SEO et le contenu marketing. Il génère des articles de blog, des landing pages et des posts sociaux optimisés pour les moteurs de recherche.", badge: "hot" },
+  { id: "frase", name: "Frase", desc: "Analyse de mots-clés et génération de briefs SEO.", link: "https://frase.io", category: "Trafic", price: "Payant", featured: false, clicks: 0, status: "verified", year: "2020", publisher: "Frase", country: "USA", descriptionFull: "Frase analyse les mots-clés et la concurrence pour générer des briefs SEO complets. Il aide à structurer des contenus qui attirent du trafic qualifié.", badge: "new" },
+  { id: "canva-ai", name: "Canva AI", desc: "Création de visuels optimisés pour les réseaux sociaux.", link: "https://canva.com", category: "Trafic", price: "Frémium", featured: false, clicks: 0, status: "verified", year: "2023", publisher: "Canva", country: "Australie", descriptionFull: "Canva AI permet de générer des visuels publicitaires, des posts sociaux et des bannières optimisées par IA pour augmenter l'engagement et le trafic." },
+  { id: "lately", name: "Lately", desc: "IA pour réécrire et optimiser les posts sociaux.", link: "https://lately.ai", category: "Trafic", price: "Payant", featured: false, clicks: 0, status: "verified", year: "2018", publisher: "Lately AI", country: "USA", descriptionFull: "Lately utilise l'IA pour transformer des contenus longs en posts sociaux optimisés, augmentant la visibilité et le trafic sur les réseaux." },
+  { id: "brand24", name: "Brand24", desc: "Analyse des mentions et tendances en temps réel.", link: "https://brand24.com", category: "Trafic", price: "Frémium", featured: false, clicks: 0, status: "verified", year: "2012", publisher: "Brand24", country: "Pologne", descriptionFull: "Brand24 est un outil de veille IA qui analyse les mentions de marque, les tendances et les sentiments en temps réel sur le web et les réseaux sociaux.", badge: "beta" }
 ];
 

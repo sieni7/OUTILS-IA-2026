@@ -170,7 +170,6 @@ body {
   transform: rotate(90deg);
   color: var(--text-strong);
 }
-
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -616,6 +615,14 @@ body {
   opacity: 1;
   pointer-events: auto;
 }
+.modal-overlay.closing {
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-overlay.closing .modal-container {
+  transform: translateY(24px) scale(0.96);
+  opacity: 0;
+}
 .modal-overlay.open .modal-container {
   transform: translateY(0) scale(1);
   opacity: 1;
@@ -776,4 +783,48 @@ body {
 }
 [data-theme="light"] .use-case p strong {
   color: #0b0c10;
+}
+
+/* ============================================
+   AMÉLIORATION DES CONTRASTES — MODE CLAIR
+   ============================================ */
+[data-theme="light"] .info-item .label {
+  color: #495057;
+}
+[data-theme="light"] .info-item .value {
+  color: #0b0c10;
+}
+[data-theme="light"] .description-full p {
+  color: #1a1a2e;
+}
+[data-theme="light"] .modal-footer .modal-stats {
+  color: #495057;
+}
+[data-theme="light"] .modal-footer .modal-stats .stat-value {
+  color: #0077ff;
+}
+[data-theme="light"] .use-case p {
+  color: #1a1a2e;
+}
+[data-theme="light"] .use-case h4 {
+  color: #0b0c10;
+}
+/* Classes réelles de la modale premium (concrétise le contraste) */
+[data-theme="light"] .modal-info-item .lbl {
+  color: #495057;
+}
+[data-theme="light"] .modal-info-item .val {
+  color: #0b0c10;
+}
+[data-theme="light"] .modal-desc {
+  color: #1a1a2e;
+}
+[data-theme="light"] .modal-desc strong {
+  color: #0b0c10;
+}
+[data-theme="light"] .modal-header h2 {
+  color: #0b0c10;
+}
+[data-theme="light"] .modal-close {
+  color: #495057;
 }
