@@ -21,15 +21,27 @@ Le site est déployé en parallèle sur 4 plateformes (même contenu, synchronis
 
 | Plateforme | URL |
 | :--- | :--- |
-| Netlify | https://outils-ia-2026.netlify.app/ |
-| Vercel | https://outils-ia-2026.vercel.app/ |
-| Firebase Hosting | https://outils-ia-2026.web.app/ |
-| GitHub Pages | https://sieni7.github.io/OUTILS-IA-2026/ |
+| Netlify | [outils-ia-2026.netlify.app](https://outils-ia-2026.netlify.app/) |
+| Vercel | [outils-ia-2026.vercel.app](https://outils-ia-2026.vercel.app/) |
+| Firebase Hosting | [outils-ia-2026.web.app](https://outils-ia-2026.web.app/) |
+| GitHub Pages | [sieni7.github.io/OUTILS-IA-2026](https://sieni7.github.io/OUTILS-IA-2026/) |
 
-**Fonctionnalités Sprint 6b vérifiées en production** : 96 cartes, badges Hot/New/Beta, carrousel héro,
-bascule thème clair/sombre, glassmorphisme navbar, footer pro, modale détaillée (année, éditeur, pays,
-description longue). Les routes sensibles (`.env`, `firebase.json`, `README.md`, `package.json`) sont
-masquées (rewrite SPA → `index.html`) ou renvoient 404 : **aucune fuite**.
+Les routes sensibles (`.env`, `firebase.json`, `README.md`, `package.json`) sont masquées
+(rewrite SPA → `index.html`) ou renvoient 404 : **aucune fuite**.
+
+## ✨ Fonctionnalités (v1.0)
+
+- **96 outils IA** référencés avec fiches détaillées
+- **Recherche en temps réel** par nom ou description
+- **Filtrage par catégorie** (16 catégories)
+- **Modale détaillée** (année, éditeur, pays, description longue)
+- **Badges de statut** (Hot, New, Beta)
+- **Compteur de clics** (persistance Firebase + localStorage)
+- **Thème clair/sombre** avec persistance locale
+- **Carrousel héro** (3 slides, blobs animés, CTA, stats)
+- **Footer corporate** (badges hébergeurs, contacts, crédits)
+- **Formulaire de soumission** d'outil (email + WhatsApp)
+- **Déployé sur 4 plateformes** (Netlify, Vercel, Firebase, GitHub Pages)
 
 ## 🔐 Gestion des clés Firebase (RÈGLE : jamais de clés sur GitHub)
 `public/firebase-config.js` est **ignoré par Git** (`.gitignore`) : vos clés restent locales.
